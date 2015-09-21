@@ -1,6 +1,8 @@
 package com.wechat.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,25 +19,27 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wechat.app.AppManager;
 import com.wechat.app.R;
 import com.wechat.ui.bean.MainTab;
 import com.wechat.ui.widget.MyFragmentTabHost;
+import com.wechat.util.PopUtil;
 
 public class MainActivity extends ActionBarActivity implements OnTabChangeListener {
 
 	private MyFragmentTabHost mTabHost;
 	private ViewPager viewPager;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_main);
 
 		AppManager.getAppManager().addActivity(this);
-		
+
 		init();
 		initTabs();
 	}
@@ -46,7 +50,7 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 		mTabHost.getTabWidget().setShowDividers(0);
 		mTabHost.setCurrentTab(0);
 		mTabHost.setOnTabChangedListener(this);
-		
+
 		ViewpagerAdapter adapter = new ViewpagerAdapter(getSupportFragmentManager());
 		viewPager = (ViewPager) findViewById(R.id.main_view_pager);
 		viewPager.setAdapter(adapter);
@@ -61,20 +65,18 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 		for (int i = 0; i < size; i++) {
 			MainTab mainTab = tabs[i];
 			TabSpec tab = mTabHost.newTabSpec(getString(mainTab.getResName()));
-			View indicator = LayoutInflater.from(getApplicationContext())
-					.inflate(R.layout.tab_indicator, null);
+			View indicator = LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_indicator, null);
 			TextView title = (TextView) indicator.findViewById(R.id.tab_title);
-			Drawable drawable = this.getResources().getDrawable(
-					mainTab.getResIcon());
+			Drawable drawable = this.getResources().getDrawable(mainTab.getResIcon());
 			drawable.setBounds(0, 0, drawable.getMinimumWidth() / 2, drawable.getMinimumHeight() / 2);
 			title.setCompoundDrawables(null, drawable, null, null);
 
 			TextView notice = (TextView) indicator.findViewById(R.id.tab_mes);
 			indicator.setTag(notice);
-			
+
 			String titleBarContent = getString(mainTab.getResName());
 			title.setText(titleBarContent);
-			
+
 			tab.setIndicator(indicator);
 			tab.setContent(new TabContentFactory() {
 
@@ -86,10 +88,10 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 			mTabHost.addTab(tab, mainTab.getClz(), null);
 		}
 	}
-	
+
 	@Override
 	public void onTabChanged(String tabId) {
-		
+
 		final int size = mTabHost.getTabWidget().getTabCount();
 
 		for (int i = 0; i < size; i++) {
@@ -99,50 +101,63 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 			} else {
 				v.setSelected(false);
 			}
-			
-			View notice = (View)v.getTag();
-			if(notice != null && notice.getVisibility() == View.VISIBLE)
+
+			View notice = (View) v.getTag();
+			if (notice != null && notice.getVisibility() == View.VISIBLE)
 				notice.setVisibility(View.GONE);
-				
+
 		}
-		
+
 		supportInvalidateOptionsMenu();
-		
+
 		int position = mTabHost.getCurrentTab();
 		viewPager.setCurrentItem(position);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
 		getMenuInflater().inflate(R.menu.main_activity_menu, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-		case R.id.title_add:
-			
+		case R.id.item_group_chat:
+			Toast.makeText(this, "发起群聊", 300).show();
+			Intent intent = new Intent();
+			intent.setClass(this, TestActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.item_add_friends:
+			Toast.makeText(this, "添加朋友", 300).show();
+			break;
+		case R.id.item_scan:
+			Toast.makeText(this, "扫一扫", 300).show();
+			break;
+		case R.id.item_collect_money:
+			Toast.makeText(this, "收钱", 300).show();
+			break;
+		case R.id.item_help_feedback:
+			Toast.makeText(this, "帮助与反馈", 300).show();
 			break;
 		case R.id.title_search:
-
+			Toast.makeText(this, "搜索", 300).show();
 			break;
 		default:
 			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void setShowTabNotice(int count) {
-		TextView notice = (TextView) mTabHost.getTabWidget()
-				.getChildAt(mTabHost.getCurrentTab()).getTag();
+		TextView notice = (TextView) mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab()).getTag();
 		notice.setVisibility(View.VISIBLE);
 		notice.setText("" + count);
 	}
-	
+
 	private class ViewpagerAdapter extends FragmentPagerAdapter implements OnPageChangeListener {
 
 		public ViewpagerAdapter(FragmentManager fm) {
@@ -151,11 +166,10 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 
 		@Override
 		public Fragment getItem(int arg0) {
-			
+
 			MainTab[] tabs = MainTab.values();
-			
-			return Fragment.instantiate(MainActivity.this, tabs[arg0].getClz().getName(),
-					null);
+
+			return Fragment.instantiate(MainActivity.this, tabs[arg0].getClz().getName(), null);
 		}
 
 		@Override
@@ -167,17 +181,17 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 		public void onPageSelected(int arg0) {
 			mTabHost.setCurrentTab(arg0);
 		}
-		
+
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 }

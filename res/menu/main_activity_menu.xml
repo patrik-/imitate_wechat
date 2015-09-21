@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:shzt="http://schemas.android.com/apk/res-auto">
+    xmlns:shzt="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/title_search"
+        android:icon="@drawable/title_search"
         android:title="@string/title_search"
-		android:icon="@drawable/title_search"
         android:visible="true"
         shzt:showAsAction="always"/>
-
     <item
         android:id="@+id/title_add"
+        android:icon="@drawable/title_add"
         android:title="@string/title_add"
-		android:icon="@drawable/title_add"
         android:visible="true"
-        shzt:showAsAction="always"/>
+        shzt:showAsAction="always">
+        <menu>
+            <item 
+                android:id="@+id/item_group_chat"
+                android:icon="@drawable/icon_group_chat"
+                android:title="发起群聊"
+                android:showAsAction="ifRoom|withText"/>
+            <item 
+                android:id="@+id/item_add_friends"
+                android:icon="@drawable/icon_add_friends"
+                android:title="添加朋友"
+                android:showAsAction="ifRoom|withText"/>
+            <item 
+                android:id="@+id/item_scan"
+                android:icon="@drawable/icon_scan"
+                android:title="扫一扫"
+                android:showAsAction="ifRoom|withText"/>
+            <item 
+                android:id="@+id/item_collect_money"
+                android:icon="@drawable/icon_collect_money"
+                android:title="收钱"
+                android:showAsAction="ifRoom|withText"/>
+            <item 
+                android:id="@+id/item_help_feedback"
+                android:icon="@drawable/icon_help_feedback"
+                android:title="帮助与反馈"
+                android:showAsAction="ifRoom|withText"/>
+        </menu>
+    </item>
+
 </menu>
