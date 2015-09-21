@@ -2,7 +2,6 @@ package com.wechat.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +24,6 @@ import com.wechat.app.AppManager;
 import com.wechat.app.R;
 import com.wechat.ui.bean.MainTab;
 import com.wechat.ui.widget.MyFragmentTabHost;
-import com.wechat.util.PopUtil;
 
 public class MainActivity extends ActionBarActivity implements OnTabChangeListener {
 
