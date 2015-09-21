@@ -24,6 +24,8 @@ import com.wechat.app.AppManager;
 import com.wechat.app.R;
 import com.wechat.ui.bean.MainTab;
 import com.wechat.ui.widget.MyFragmentTabHost;
+import com.wechat.util.BackPage;
+import com.wechat.util.UiHelper;
 
 public class MainActivity extends ActionBarActivity implements OnTabChangeListener {
 
@@ -125,9 +127,11 @@ public class MainActivity extends ActionBarActivity implements OnTabChangeListen
 		switch (id) {
 		case R.id.item_group_chat:
 			Toast.makeText(this, "发起群聊", 300).show();
-			Intent intent = new Intent();
-			intent.setClass(this, TestActivity.class);
-			startActivity(intent);
+			UiHelper.showSimpleBack(this, BackPage.GROUPCHAT);
+//			Intent intent = new Intent();
+//			intent.putExtra("", value)
+//			intent.setClass(this, BackActivity.class);
+//			startActivity(intent);
 			break;
 		case R.id.item_add_friends:
 			Toast.makeText(this, "添加朋友", 300).show();

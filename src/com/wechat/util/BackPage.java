@@ -5,7 +5,9 @@ import com.wechat.app.R;
 
 public enum BackPage {
 	
-	SETTING(1, R.string.title_chat, BackPage.class);
+	SETTING(1, R.string.title_chat, BackPage.class),
+	
+	GROUPCHAT(2, R.string.start_group_chat, BackPage.class);
 	
     private int title;
     private Class<?> clz;
